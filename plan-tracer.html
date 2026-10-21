@@ -52,7 +52,8 @@
 </head>
 <body>
 <div id="panel">
-  <button id="themeBtn">Theme: system</button>
+  <button id="themeBtn" data-dyn>Theme: system</button>
+  <button id="langBtn" data-dyn title="Sprache / Language">Deutsch</button>
   <fieldset>
     <legend>Floor</legend>
     <label>Floor ID <input type="text" id="floorId" value="EG"></label>
@@ -188,7 +189,7 @@
     <button id="open">Open</button>
     <button id="save">Save</button>
     <button id="exportPng">Export PNG</button>
-    <button id="newDoc">New</button>
+    <button id="newDoc" data-dyn>New</button>
     <input type="file" id="openFile" accept=".svg" hidden>
   </fieldset>
 </div>
@@ -217,8 +218,8 @@
 <div id="toast"></div>
 <canvas id="rulerH"></canvas>
 <canvas id="rulerV"></canvas>
-<button id="orthoBtn" title="Orthogonal drawing and moving (also while Shift is held)">Ortho: off</button>
-<button id="mapBtn" title="Show or hide the overview map">Map: off</button>
+<button id="orthoBtn" data-dyn title="Orthogonal drawing and moving (also while Shift is held)">Ortho: off</button>
+<button id="mapBtn" data-dyn title="Show or hide the overview map">Map: off</button>
 <canvas id="minimap" width="180" height="130"></canvas>
 <div id="scaleBar"><span id="scaleTxt"></span></div>
 <details id="help" open>
@@ -276,6 +277,45 @@ const msg = t => {
   toastTimer = setTimeout(() => el.classList.remove('show'), 3500);
 };
 const scale = () => view.getScreenCTM().a;
+
+// Language: English strings are the keys; DE maps them to German. Plan files and layer names stay language-neutral.
+const DE = { "Floor": "Geschoss", "Floor ID": "Geschoss-ID", "Level": "Ebene", "Frame x": "Rahmen x", "Frame y": "Rahmen y", "Frame width": "Rahmenbreite", "Frame height": "Rahmenhöhe", "Units per meter": "Einheiten pro Meter", "Underlays": "Unterlagen", "Remove": "Entfernen", "Fit to frame": "In Rahmen einpassen", "Clear crop": "Zuschnitt löschen", "Raise": "Nach oben", "Lower": "Nach unten", "Name": "Name", "Rotation (°)": "Drehung (°)", "Scale": "Maßstab", "Opacity": "Deckkraft", "Brightness": "Helligkeit", "Contrast": "Kontrast", "Visible": "Sichtbar", "Locked": "Gesperrt", "Flip horizontal": "Horizontal spiegeln", "Flip vertical": "Vertikal spiegeln", "Nudge step": "Schrittweite", "Tools": "Werkzeuge", "Pan": "Verschieben", "Underlay": "Unterlage", "Crop": "Zuschneiden", "Rotate": "Drehen", "Make horizontal": "Waagerecht ausrichten", "Calibrate": "Kalibrieren", "Line": "Linie", "Rectangle": "Rechteck", "Polyline": "Polylinie", "Circle": "Kreis", "Path": "Pfad", "Place symbol": "Symbol setzen", "Text": "Text", "Measure": "Messen", "Dimension": "Bemaßung", "Offset": "Versetzen", "Trim": "Stutzen", "Extend": "Verlängern", "Zoom window": "Zoomfenster", "Select": "Auswählen", "Font size": "Schriftgröße", "Apply to selected text": "Auf gewählten Text anwenden", "Real distance (m)": "Reale Strecke (m)", "Line thickness": "Linienstärke", "Line color": "Linienfarbe", "Apply to selected lines": "Auf gewählte Linien anwenden", "Offset distance (m)": "Versatz (m)", "Path: smooth curve": "Pfad: glatte Kurve", "Path: closed": "Pfad: geschlossen", "Attach new text to the element under the click": "Neuen Text am Element unter dem Klick anheften", "Symbols": "Symbole", "Width (m)": "Breite (m)", "Depth (m)": "Tiefe (m)", "Rotation": "Drehung", "Apply to selected symbol": "Auf gewähltes Symbol anwenden", "Rotate 90°": "90° drehen", "Layers": "Ebenen", "Add": "Hinzufügen", "Rename": "Umbenennen", "Delete": "Löschen", "Move selected here": "Auswahl hierher verschieben", "Edit": "Bearbeiten", "Undo": "Rückgängig", "Redo": "Wiederholen", "Duplicate": "Duplizieren", "Select all": "Alles auswählen", "Attach text": "Text anheften", "Detach text": "Text lösen", "Element ID": "Element-ID", "Rename ID": "ID umbenennen", "Join collinear": "Kollineare verbinden", "Arrange": "Anordnen", "Align left": "Links ausrichten", "Align right": "Rechts ausrichten", "Align top": "Oben ausrichten", "Align bottom": "Unten ausrichten", "Center horizontally": "Horizontal zentrieren", "Center vertically": "Vertikal zentrieren", "Distribute horizontally": "Horizontal verteilen", "Distribute vertically": "Vertikal verteilen", "View and aids": "Ansicht und Hilfen", "Zoom in": "Vergrößern", "Zoom out": "Verkleinern", "Zoom to frame": "Auf Rahmen zoomen", "Zoom to drawing": "Auf Zeichnung zoomen", "Show grid": "Raster anzeigen", "Grid spacing": "Rasterweite", "Snap to grid": "Am Raster fangen", "Ortho (45°)": "Ortho (45°)", "Tracking guides": "Spurführungslinien", "Rulers and scale bar": "Lineale und Maßstabsleiste", "Chain lines": "Linienzug", "File": "Datei", "Include underlay reference": "Unterlage als Referenz einbinden", "Open": "Öffnen", "Save": "Speichern", "Export PNG": "PNG exportieren", "New": "Neu", "Help": "Hilfe", "Draw this underlay above the next one": "Diese Unterlage über der nächsten zeichnen", "Draw this underlay below the previous one": "Diese Unterlage unter der vorherigen zeichnen", "Move the underlay left": "Unterlage nach links verschieben", "Move the underlay right": "Unterlage nach rechts verschieben", "Move the underlay up": "Unterlage nach oben verschieben", "Move the underlay down": "Unterlage nach unten verschieben", "Apply type, size and rotation to the selected symbol": "Typ, Größe und Drehung auf das gewählte Symbol anwenden", "Turn the selected symbols by 90 degrees": "Gewählte Symbole um 90 Grad drehen", "Delete the layer; its elements move to the first remaining layer": "Ebene löschen; ihre Elemente wandern in die erste verbleibende Ebene", "Move the selected elements to the chosen layer": "Gewählte Elemente in die gewählte Ebene verschieben", "Select one text and one element, then attach the text to the element": "Einen Text und ein Element wählen, dann den Text am Element anheften", "Make the selected texts free again": "Gewählte Texte wieder freigeben", "Join touching or overlapping collinear lines of the same thickness and color": "Sich berührende oder überlappende kollineare Linien gleicher Stärke und Farbe verbinden", "Drag to resize the panel": "Ziehen, um die Leiste zu vergrößern", "Orthogonal drawing and moving (also while Shift is held)": "Orthogonal zeichnen und verschieben (auch bei gedrückter Umschalttaste)", "Show or hide the overview map": "Übersichtskarte ein- oder ausblenden", "Floor: set the floor ID, level, frame and units per meter.": "Geschoss: Geschoss-ID, Ebene, Rahmen und Einheiten pro Meter festlegen.", "Underlays: pick one or more images. Choose one in the list, then drag it with the Underlay tool or type x, y, rotation and scale. Flip, opacity, Visible and Locked apply to the chosen one. Crop: drag a rectangle on it with the Crop tool.": "Unterlagen: ein oder mehrere Bilder wählen. In der Liste eines auswählen, dann mit dem Werkzeug Unterlage ziehen oder x, y, Drehung und Maßstab eintippen. Spiegeln, Deckkraft, Sichtbar und Gesperrt gelten für die gewählte Unterlage. Zuschneiden: mit dem Werkzeug Zuschneiden ein Rechteck darauf ziehen.", "Underlay tools: Rotate turns the chosen underlay about the center of its visible part as you drag (Shift: 15° steps). Make horizontal: click two points that should be level and the underlay turns about the first. The arrow buttons nudge it by the step. Raise and Lower change which underlay is drawn on top, Name sets a label, Brightness and Contrast adjust the picture. All are saved with the underlay.": "Unterlagen-Werkzeuge: Drehen dreht die gewählte Unterlage beim Ziehen um die Mitte ihres sichtbaren Teils (Umschalt: 15°-Schritte). Waagerecht ausrichten: zwei Punkte anklicken, die auf gleicher Höhe liegen sollen; die Unterlage dreht sich um den ersten. Die Pfeiltasten verschieben sie um die Schrittweite. Nach oben und Nach unten bestimmen, welche Unterlage oben liegt, Name vergibt eine Bezeichnung, Helligkeit und Kontrast passen das Bild an. Alles wird mit der Unterlage gespeichert.", "View: Zoom window zooms to a dragged rectangle. Map shows an overview, and clicking or dragging in it moves the view. The rulers read meters from the frame's top-left corner, and the scale bar shows a round length.": "Ansicht: Zoomfenster zoomt auf ein aufgezogenes Rechteck. Karte zeigt eine Übersicht; Klicken oder Ziehen darin verschiebt die Ansicht. Die Lineale zeigen Meter ab der oberen linken Ecke des Rahmens, die Maßstabsleiste eine runde Länge.", "Calibrate: enter the real distance in meters, then click two points a known distance apart on the underlay. The underlay is rescaled to match.": "Kalibrieren: die reale Strecke in Metern eingeben, dann zwei Punkte mit bekanntem Abstand auf der Unterlage anklicken. Die Unterlage wird entsprechend skaliert.", "Line: click the start, then the end, or drag from the start to the end. Ends snap to line ends, midpoints, intersections and the grid. After the start you can type a length in meters and press Enter. Ortho (the button on the drawing, the checkbox, or Shift) locks 45° steps; it makes rectangles square and keeps moves and line-end drags on one axis. Chain lines continues from the last end. Esc cancels.": "Linie: Anfang und dann Ende anklicken oder vom Anfang zum Ende ziehen. Enden rasten an Linienenden, Mittelpunkten, Schnittpunkten und am Raster ein. Nach dem Anfang kann eine Länge in Metern getippt und mit Enter bestätigt werden. Ortho (die Schaltfläche auf der Zeichnung, das Kontrollkästchen oder Umschalt) rastet in 45°-Schritten ein; Rechtecke werden quadratisch, Verschieben und Ziehen von Linienenden bleiben auf einer Achse. Linienzug setzt am letzten Ende fort. Esc bricht ab.", "Rectangle: click two opposite corners. Measure: click two points to read the distance. Dimension: click two points, then where the dimension line goes.": "Rechteck: zwei gegenüberliegende Ecken anklicken. Messen: zwei Punkte anklicken, um den Abstand abzulesen. Bemaßung: zwei Punkte anklicken, dann die Lage der Maßlinie.", "Polyline and Path: click the points, then right-click, Enter or a second click on the last point to finish (Path can be a smooth curve, open or closed). Circle: click the center, then a point on the circle. Select a shape to drag its vertices or its radius. Every element has an ID, shown and renamable in Edit.": "Polylinie und Pfad: Punkte anklicken, zum Beenden Rechtsklick, Enter oder ein zweiter Klick auf den letzten Punkt (ein Pfad kann eine glatte Kurve, offen oder geschlossen sein). Kreis: Mittelpunkt und dann einen Punkt auf dem Kreis anklicken. Eine Form auswählen, um ihre Eckpunkte oder ihren Radius zu ziehen. Jedes Element hat eine ID, die unter Bearbeiten angezeigt und umbenannt werden kann.", "Symbols: choose a type, set the width and depth in meters, then click with Place symbol; the symbol is centered on the click. Select one to change its size, type or rotation, or turn it by 90°.": "Symbole: einen Typ wählen, Breite und Tiefe in Metern festlegen, dann mit Symbol setzen klicken; das Symbol wird auf dem Klick zentriert. Ein Symbol auswählen, um Größe, Typ oder Drehung zu ändern oder es um 90° zu drehen.", "Text on an element: with the Text tool, a click on a line, polyline, path, circle or symbol attaches the text to it (the option can be switched off); it then follows the element, lies along lines and can be dragged to set its offset. Select one text and one element and use Attach text or Detach text to change it later. Deleting an element deletes its attached texts.": "Text an einem Element: Ein Klick mit dem Textwerkzeug auf eine Linie, Polylinie, einen Pfad, Kreis oder ein Symbol heftet den Text daran an (die Option lässt sich abschalten); er folgt dann dem Element, liegt entlang von Linien und kann zum Einstellen des Abstands gezogen werden. Einen Text und ein Element wählen und Text anheften oder Text lösen verwenden, um es später zu ändern. Beim Löschen eines Elements werden seine angehefteten Texte mitgelöscht.", "Layers: add, rename and delete layers, hide or lock the chosen one, and move the selected elements to it. New elements go to the chosen layer. Hidden layers are not drawn, snapped to or exported; locked layers cannot be picked.": "Ebenen: Ebenen hinzufügen, umbenennen und löschen, die gewählte ausblenden oder sperren und die gewählten Elemente dorthin verschieben. Neue Elemente kommen in die gewählte Ebene. Ausgeblendete Ebenen werden weder gezeichnet noch gefangen noch exportiert; gesperrte Ebenen lassen sich nicht anwählen.", "Offset: select lines, set the distance in meters, choose Offset and click the side. Trim: click the part of a line to remove between its crossings. Extend: click a line near the end to lengthen it to the next line.": "Versetzen: Linien auswählen, Abstand in Metern einstellen, Versetzen wählen und die Seite anklicken. Stutzen: den Teil einer Linie zwischen ihren Schnittpunkten anklicken, um ihn zu entfernen. Verlängern: eine Linie nahe dem Ende anklicken, um sie bis zur nächsten Linie zu verlängern.", "Line thickness and color apply to new lines; use Apply to selected lines to change existing ones. Edit has Select all (Ctrl+A) and Join collinear; Arrange aligns and distributes the selection.": "Linienstärke und -farbe gelten für neue Linien; bestehende ändert man mit Auf gewählte Linien anwenden. Bearbeiten enthält Alles auswählen (Strg+A) und Kollineare verbinden; Anordnen richtet die Auswahl aus und verteilt sie.", "Text: type it in the Text field, choose the Text tool, click where it goes.": "Text: im Textfeld eingeben, das Textwerkzeug wählen und dorthin klicken, wo der Text hin soll.", "Select: click an element, Shift-click to add, drag on empty space to select a box, drag to move, drag a line end to reshape. Select one text to edit it and use Apply to selected text. Delete, Duplicate, Undo and Redo work on the selection.": "Auswählen: ein Element anklicken, mit Umschalt-Klick hinzufügen, auf leerer Fläche ziehen für einen Auswahlrahmen, ziehen zum Verschieben, ein Linienende ziehen zum Verformen. Einen Text auswählen, um ihn zu bearbeiten, und Auf gewählten Text anwenden verwenden. Löschen, Duplizieren, Rückgängig und Wiederholen wirken auf die Auswahl.", "Pan: Pan tool, middle mouse button, or two fingers. Zoom: wheel, pinch or the Zoom buttons.": "Verschieben: Werkzeug Verschieben, mittlere Maustaste oder zwei Finger. Zoom: Mausrad, Pinch-Geste oder die Zoom-Schaltflächen.", "Right-click ends a chain or cancels a pending point. The marker at the cursor shows the snap: square = end, triangle = midpoint, X = intersection, plus = grid, circle = aligned with another point, bar with ticks = extension of a line, right angle = perpendicular, two slashes = parallel, diamond = polar angle.": "Rechtsklick beendet einen Linienzug oder verwirft einen offenen Punkt. Die Markierung am Cursor zeigt den Fang: Quadrat = Endpunkt, Dreieck = Mittelpunkt, X = Schnittpunkt, Plus = Raster, Kreis = fluchtend mit einem anderen Punkt, Balken mit Strichen = Verlängerung einer Linie, rechter Winkel = senkrecht, zwei Schrägstriche = parallel, Raute = Polarwinkel.", "Tracking guides (dashed green, switched by the checkbox): the cursor snaps level with the ends and midpoints of lines and with the start point, onto the extension of a line beyond its end, and where two guides cross. While drawing it also snaps to the perpendicular foot on a line, parallel to a line you hovered over, and to 0, 30, 45, 60, 90 degrees and so on around the start point. Ortho turns the tracking off while a line is being drawn.": "Spurführungslinien (grün gestrichelt, per Kontrollkästchen schaltbar): Der Cursor rastet auf gleicher Höhe mit den Enden und Mittelpunkten von Linien und mit dem Startpunkt ein, auf der Verlängerung einer Linie über ihr Ende hinaus und dort, wo sich zwei Führungslinien kreuzen. Beim Zeichnen rastet er außerdem auf dem Lotfußpunkt einer Linie, parallel zu einer überfahrenen Linie und bei 0, 30, 45, 60, 90 Grad usw. um den Startpunkt ein. Ortho schaltet die Spurführung beim Zeichnen einer Linie ab.", "Export PNG saves the frame area as a picture. Theme cycles system, light and dark. Click a section title to collapse it.": "PNG exportieren speichert den Rahmenbereich als Bild. Design wechselt zwischen System, Hell und Dunkel. Ein Klick auf einen Abschnittstitel klappt ihn zu.", "Work is autosaved in this browser. Save writes the plan SVG; untick \"Include underlay reference\" to leave the images out. Open reads a plan SVG; pick the underlay images again to see them.": "Die Arbeit wird automatisch in diesem Browser gespeichert. Speichern schreibt die Plan-SVG; \"Unterlage als Referenz einbinden\" abwählen, um die Bilder wegzulassen. Öffnen liest eine Plan-SVG; die Unterlagen-Bilder müssen erneut gewählt werden, um sie zu sehen.", "drag to pan": "zum Verschieben ziehen", "drag the chosen underlay": "die gewählte Unterlage ziehen", "drag a rectangle on the underlay": "Rechteck auf der Unterlage aufziehen", "click the second point": "zweiten Punkt anklicken", "click the first point": "ersten Punkt anklicken", "click the end point or type a length, right-click to finish": "Endpunkt anklicken oder Länge tippen, Rechtsklick beendet", "click or drag from the start point": "Startpunkt anklicken oder von dort ziehen", "click where the dimension line goes": "dorthin klicken, wo die Maßlinie verlaufen soll", "drag around the chosen underlay to turn it, Shift for 15° steps": "um die gewählte Unterlage ziehen, um sie zu drehen, Umschalt für 15°-Schritte", "click the first of two points that should be level": "ersten von zwei Punkten anklicken, die auf gleicher Höhe liegen sollen", "drag a rectangle to zoom to": "Rechteck zum Hineinzoomen aufziehen", "select lines, then click the side to offset them": "Linien auswählen, dann die Seite für den Versatz anklicken", "click the part of a line to remove": "den zu entfernenden Teil einer Linie anklicken", "click a line near the end to extend": "eine Linie nahe dem Ende zum Verlängern anklicken", "click the next point, right-click or Enter to finish": "nächsten Punkt anklicken, Rechtsklick oder Enter beendet", "click the first point (Smooth curve and Closed are in Tools)": "ersten Punkt anklicken (Glatte Kurve und Geschlossen unter Werkzeuge)", "click a point on the circle": "Punkt auf dem Kreis anklicken", "click the center": "Mittelpunkt anklicken", "click where the symbol goes (centered)": "dorthin klicken, wo das Symbol hin soll (zentriert)", "click the opposite corner": "gegenüberliegende Ecke anklicken", "click a corner": "Ecke anklicken", "click where the text goes": "dorthin klicken, wo der Text hin soll", "click or drag to select": "zum Auswählen klicken oder ziehen", "{0} selected": "{0} gewählt", "length {0}": "Länge {0}", "length {0} at {1}": "Länge {0} bei {1}", "typed length {0} m, Enter to place": "eingegebene Länge {0} m, Enter zum Setzen", "total length {0}": "Gesamtlänge {0}", "drawing length {0}": "Zeichenlänge {0}", "angle {0}": "Winkel {0}", "typed length {0} m": "eingegebene Länge {0} m", "Ortho: {0}": "Ortho: {0}", "Map: {0}": "Karte: {0}", "Theme: {0}": "Design: {0}", "on": "an", "off": "aus", "system": "System", "light": "Hell", "dark": "Dunkel", "Really clear?": "Wirklich leeren?", "(hidden)": "(ausgeblendet)", "(locked)": "(gesperrt)", "(image missing)": "(Bild fehlt)", "Stairs": "Treppe", "Shelf or rack": "Regal", "Door with swing": "Tür mit Aufschlag", "Gate or roller door": "Tor oder Rolltor", "Loading dock door": "Rampentor", "Column": "Stütze", "Pallet": "Palette", "Ramp": "Rampe", "Elevator": "Aufzug", "Underlay turned by {0}°.": "Unterlage um {0}° gedreht.", "Underlay loaded: {0}": "Unterlage geladen: {0}", "Could not load image: {0}": "Bild konnte nicht geladen werden: {0}", "The active layer is hidden or locked.": "Die aktive Ebene ist ausgeblendet oder gesperrt.", "Select a text element first.": "Zuerst ein Textelement auswählen.", "Select a line, shape or symbol first.": "Zuerst eine Linie, Form oder ein Symbol auswählen.", "Select at least three elements.": "Mindestens drei Elemente auswählen.", "Select at least two elements.": "Mindestens zwei Elemente auswählen.", "Already arranged.": "Bereits angeordnet.", "Nothing to join.": "Nichts zu verbinden.", "Joined {0} lines into {1}.": "{0} Linien zu {1} verbunden.", "Enter an offset distance above zero.": "Einen Versatz größer als null eingeben.", "Select the lines first, then choose Offset and click the side.": "Zuerst die Linien auswählen, dann Versetzen wählen und die Seite anklicken.", "Click a line.": "Eine Linie anklicken.", "No crossing line to trim at.": "Keine kreuzende Linie zum Stutzen.", "Click a line near the end to extend.": "Eine Linie nahe dem Ende zum Verlängern anklicken.", "No line to extend to.": "Keine Linie, bis zu der verlängert werden kann.", "Click at least {0} points.": "Mindestens {0} Punkte anklicken.", "Enter the text in the Text field first.": "Zuerst den Text im Textfeld eingeben.", "Distance: {0}": "Abstand: {0}", "Click to one side of the measured line.": "Auf eine Seite der gemessenen Linie klicken.", "Pick an underlay image first.": "Zuerst ein Unterlagenbild wählen.", "The underlay is locked.": "Die Unterlage ist gesperrt.", "Enter the real distance in meters first.": "Zuerst die reale Strecke in Metern eingeben.", "Underlay scale set to {0}": "Maßstab der Unterlage auf {0} gesetzt", "Set units per meter and type a length above zero.": "Einheiten pro Meter festlegen und eine Länge größer als null tippen.", "Move the cursor in the direction of the line first.": "Zuerst den Cursor in Richtung der Linie bewegen.", "Select a symbol first.": "Zuerst ein Symbol auswählen.", "Select one text and one element to attach it to.": "Einen Text und ein Element zum Anheften wählen.", "Select an attached text first.": "Zuerst einen angehefteten Text auswählen.", "Select one element first.": "Zuerst ein Element auswählen.", "An ID starts with a letter and has only letters, digits and underscores.": "Eine ID beginnt mit einem Buchstaben und enthält nur Buchstaben, Ziffern und Unterstriche.", "That ID is already used.": "Diese ID wird bereits verwendet.", "A layer with that name exists.": "Eine Ebene mit diesem Namen existiert bereits.", "The last layer cannot be deleted.": "Die letzte Ebene kann nicht gelöscht werden.", "Layer deleted; its elements moved to {0}.": "Ebene gelöscht; ihre Elemente wurden nach {0} verschoben.", "Select elements that are on another layer first.": "Zuerst Elemente auswählen, die auf einer anderen Ebene liegen.", "Error: {0}": "Fehler: {0}", "Cannot save: {0}.": "Speichern nicht möglich: {0}.", "Saved.": "Gespeichert.", "the frame width and height must be above zero": "Rahmenbreite und -höhe müssen größer als null sein", "the floor ID is empty": "die Geschoss-ID ist leer", "units per meter must be above zero": "Einheiten pro Meter müssen größer als null sein", "Cannot export: the frame width and height must be above zero.": "Export nicht möglich: Rahmenbreite und -höhe müssen größer als null sein.", "Could not create the PNG.": "Das PNG konnte nicht erstellt werden.", "PNG saved.": "PNG gespeichert.", "Not an SVG file.": "Keine SVG-Datei.", "Opened. Pick the underlay images again: {0}": "Geöffnet. Unterlagenbilder erneut wählen: {0}", "Opened.": "Geöffnet.", "Cleared.": "Geleert.", "Restored the autosave from {0}.": "Automatische Sicherung von {0} wiederhergestellt.", "Pick the underlay images again.": "Unterlagenbilder erneut wählen." };
+let lang = 'en';
+const tr = (s, ...a) => {
+  let r = lang === 'de' && DE[s] !== undefined ? DE[s] : s;
+  a.forEach((v, i) => { r = r.split('{' + i + '}').join(v); });
+  return r;
+};
+const i18nOrig = new Map();   // text node or element -> original English
+function applyLang() {
+  document.documentElement.lang = lang;
+  const roots = ['panel', 'help', 'resizer', 'orthoBtn', 'mapBtn'].map($);
+  const setText = (n, en) => {
+    const m = /^(\s*)([\s\S]*?)(\s*)$/.exec(en), key = m[2].replace(/\s+/g, ' ');
+    n.nodeValue = m[1] + (lang === 'de' && DE[key] !== undefined ? DE[key] : m[2]) + m[3];
+  };
+  for (const r of roots) {
+    const skip = e => e.closest('[data-dyn]') || e.closest('select');
+    const w = document.createTreeWalker(r, NodeFilter.SHOW_TEXT);
+    for (let n; (n = w.nextNode());) {
+      if (!n.nodeValue.trim() || skip(n.parentElement)) continue;
+      if (!i18nOrig.has(n)) i18nOrig.set(n, n.nodeValue);
+      setText(n, i18nOrig.get(n));
+    }
+    for (const e of [r, ...r.querySelectorAll('[title]')]) {
+      if (!e.hasAttribute('title') || e.id === 'langBtn') continue;
+      if (!i18nOrig.has(e)) i18nOrig.set(e, e.getAttribute('title'));
+      const en = i18nOrig.get(e);
+      e.setAttribute('title', lang === 'de' && DE[en] !== undefined ? DE[en] : en);
+    }
+  }
+  $('langBtn').textContent = lang === 'de' ? 'English' : 'Deutsch';
+  fillSymTypes(); syncControls(); syncLayers(); applyTheme(); syncOrtho(); syncMap();
+  clearTimeout(newArmed); newArmed = null; $('newDoc').textContent = tr('New');
+  updateStatus();
+}
+function setLang(l) { lang = l; ui.lang = l; uiSave(); applyLang(); }
+
 
 function frame() { return { x: num('fx'), y: num('fy'), w: num('fw'), h: num('fh') }; }
 function curU() { return unders[activeU] || null; }
@@ -372,7 +412,7 @@ function rebuildUnderDom() {
   }
 }
 
-const underName = u => (u.label || u.name) + (u.url ? '' : ' (image missing)');
+const underName = u => (u.label || u.name) + (u.url ? '' : ' ' + tr('(image missing)'));
 
 function syncControls() {
   const s = $('underSel');
@@ -428,7 +468,7 @@ function makeHorizontal(u, a, b) {
   u.x = r3(a.x + dx * c - dy * s); u.y = r3(a.y + dx * s + dy * c);
   u.rot = r3(normDeg(u.rot + delta));
   renderU(u); syncControls(); changed();
-  msg('Underlay turned by ' + delta.toFixed(2) + '°.');
+  msg(tr('Underlay turned by {0}°.', delta.toFixed(2)));
 }
 
 function addUnderlayFile(file) {
@@ -441,9 +481,9 @@ function addUnderlayFile(file) {
     u.w = probe.naturalWidth; u.h = probe.naturalHeight; u.bitmap = probe;
     activeU = unders.indexOf(u);
     rebuildUnderDom(); syncControls(); changed();
-    msg('Underlay loaded: ' + u.name);
+    msg(tr('Underlay loaded: {0}', u.name));
   };
-  probe.onerror = () => msg('Could not load image: ' + file.name);
+  probe.onerror = () => msg(tr('Could not load image: {0}', file.name));
   probe.src = url;
 }
 
@@ -938,7 +978,7 @@ function redo() { const op = redoS.pop(); if (!op) return; runOp(op, 'redo'); un
 
 function addEls(els) {
   const L = layerByName(activeLayer);
-  if (!L || !L.visible || L.locked) { msg('The active layer is hidden or locked.'); return; }
+  if (!L || !L.visible || L.locked) { msg(tr('The active layer is hidden or locked.')); return; }
   els.forEach(e => gTrace.appendChild(e));
   push({ type: 'add', els });
 }
@@ -984,7 +1024,7 @@ function applyToSelectedText() {
     items.push({ el: e, before: { 'font-size': e.getAttribute('font-size') }, after: { 'font-size': num('fontSize') },
       beforeText: e.textContent, afterText: s });
   }
-  if (!items.length) { msg('Select a text element first.'); return; }
+  if (!items.length) { msg(tr('Select a text element first.')); return; }
   const op = { type: 'attrs', items };
   runOp(op, 'redo'); push(op);
 }
@@ -995,7 +1035,7 @@ function applyLineStyle() {
     if (!isShape(e)) continue;
     items.push({ el: e, before: { 'stroke-width': e.getAttribute('stroke-width'), 'data-color': lineColor(e) }, after: { 'stroke-width': st.w, 'data-color': st.c } });
   }
-  if (!items.length) { msg('Select a line, shape or symbol first.'); return; }
+  if (!items.length) { msg(tr('Select a line, shape or symbol first.')); return; }
   const op = { type: 'attrs', items };
   runOp(op, 'redo'); push(op);
 }
@@ -1014,7 +1054,7 @@ function bboxOf(e) {
 }
 function arrange(kind) {
   const els = [...sel], dist = kind.startsWith('dist');
-  if (els.length < (dist ? 3 : 2)) { msg(dist ? 'Select at least three elements.' : 'Select at least two elements.'); return; }
+  if (els.length < (dist ? 3 : 2)) { msg(dist ? tr('Select at least three elements.') : tr('Select at least two elements.')); return; }
   const bs = els.map(bboxOf), n = els.length;
   const minX = Math.min(...bs.map(b => b.x)), maxX = Math.max(...bs.map(b => b.x + b.w));
   const minY = Math.min(...bs.map(b => b.y)), maxY = Math.max(...bs.map(b => b.y + b.h));
@@ -1039,7 +1079,7 @@ function arrange(kind) {
     if (!followsSet(e, sel)) applyMove(e, before, mv[i][0], mv[i][1]);
     return { el: e, before, after: snapshot(e) };
   }).filter(it => JSON.stringify(it.before) !== JSON.stringify(it.after));
-  if (!items.length) { msg('Already arranged.'); return; }
+  if (!items.length) { msg(tr('Already arranged.')); return; }
   push({ type: 'attrs', items });
 }
 
@@ -1076,22 +1116,22 @@ function joinCollinear() {
       break outer;
     }
   }
-  if (!removed.length) { msg('Nothing to join.'); return; }
+  if (!removed.length) { msg(tr('Nothing to join.')); return; }
   removed.forEach(r => setAttrs(r, orig.get(r)));
   const aItems = [...alive].map(el => ({ el, before: orig.get(el), after: snapshot(el) }))
     .filter(it => JSON.stringify(it.before) !== JSON.stringify(it.after));
   const dItems = removed.map(el => ({ el, idx: all.indexOf(el) })).sort((a, b) => a.idx - b.idx);
   const op = { type: 'multi', ops: [{ type: 'attrs', items: aItems }, { type: 'del', items: dItems }] };
   runOp(op, 'redo'); push(op);
-  msg('Joined ' + lines.length + ' lines into ' + alive.size + '.');
+  msg(tr('Joined {0} lines into {1}.', lines.length, alive.size));
 }
 
 // Offset: parallel copies of the selected lines at the typed distance, on the side of the click
 function doOffset(p) {
   const d = num('offDist') * num('upm');
-  if (!(d > 0)) { msg('Enter an offset distance above zero.'); return; }
+  if (!(d > 0)) { msg(tr('Enter an offset distance above zero.')); return; }
   const lines = [...sel].filter(e => e.tagName === 'line');
-  if (!lines.length) { msg('Select the lines first, then choose Offset and click the side.'); return; }
+  if (!lines.length) { msg(tr('Select the lines first, then choose Offset and click the side.')); return; }
   const els = [];
   for (const l of lines) {
     const s = segOf(l), L = Math.hypot(s.x2 - s.x1, s.y2 - s.y1);
@@ -1106,7 +1146,7 @@ function doOffset(p) {
 // Trim: remove the clicked part of a line between its nearest crossings with other lines
 function doTrim(p) {
   const l = hitTest(p);
-  if (!l || l.tagName !== 'line') { msg('Click a line.'); return; }
+  if (!l || l.tagName !== 'line') { msg(tr('Click a line.')); return; }
   const s = segOf(l), dx = s.x2 - s.x1, dy = s.y2 - s.y1, L2 = dx * dx + dy * dy;
   if (!L2) return;
   const tOf = q => ((q.x - s.x1) * dx + (q.y - s.y1) * dy) / L2;
@@ -1118,7 +1158,7 @@ function doTrim(p) {
   }
   const lows = ts.filter(t => t <= t0), highs = ts.filter(t => t > t0);
   const lo = lows.length ? Math.max(...lows) : null, hi = highs.length ? Math.min(...highs) : null;
-  if (lo === null && hi === null) { msg('No crossing line to trim at.'); return; }
+  if (lo === null && hi === null) { msg(tr('No crossing line to trim at.')); return; }
   const pieces = [];
   if (lo !== null && lo > 1e-6) pieces.push([0, lo]);
   if (hi !== null && hi < 1 - 1e-6) pieces.push([hi, 1]);
@@ -1141,7 +1181,7 @@ function doTrim(p) {
 // Extend: lengthen the end of the clicked line nearest the click to the first line it meets
 function doExtend(p) {
   const l = hitTest(p);
-  if (!l || l.tagName !== 'line') { msg('Click a line near the end to extend.'); return; }
+  if (!l || l.tagName !== 'line') { msg(tr('Click a line near the end to extend.')); return; }
   const s = segOf(l);
   const end = Math.hypot(p.x - s.x1, p.y - s.y1) <= Math.hypot(p.x - s.x2, p.y - s.y2) ? 1 : 2;
   const e = end === 1 ? { x: s.x1, y: s.y1 } : { x: s.x2, y: s.y2 };
@@ -1157,7 +1197,7 @@ function doExtend(p) {
     const uT = ((b.x1 - e.x) * dy - (b.y1 - e.y) * dx) / den;
     if (sT > 1e-9 && uT >= 0 && uT <= 1 && (!best || sT < best.s)) best = { s: sT, x: r6(e.x + sT * dx), y: r6(e.y + sT * dy) };
   }
-  if (!best) { msg('No line to extend to.'); return; }
+  if (!best) { msg(tr('No line to extend to.')); return; }
   const op = { type: 'attrs', items: [{ el: l, before: snapshot(l), after: { ['x' + end]: best.x, ['y' + end]: best.y } }] };
   runOp(op, 'redo'); push(op);
 }
@@ -1264,7 +1304,7 @@ function finishShape() {
   const pts = poly.slice(), closed = tool === 'path' && $('pathClosed').checked, min = closed ? 3 : 2;
   const t = tool;
   endDraw();
-  if (pts.length < min) { if (pts.length) msg('Click at least ' + min + ' points.'); return; }
+  if (pts.length < min) { if (pts.length) msg(tr('Click at least {0} points.', min)); return; }
   addEls([t === 'polyline' ? mkPoly(pts) : mkPath(pts, $('pathSmooth').checked, closed)]);
 }
 
@@ -1279,7 +1319,8 @@ const TOOL_NAMES = { pan: 'Pan', underlay: 'Underlay', crop: 'Crop', calibrate: 
   extend: 'Extend', rotate: 'Rotate', horizontal: 'Make horizontal', zoomwin: 'Zoom window', polyline: 'Polyline',
   circle: 'Circle', path: 'Path', symbol: 'Place symbol', select: 'Select' };
 
-function hint() {
+function hint() { return tr(hintEn()); }
+function hintEn() {
   switch (tool) {
     case 'pan': return 'drag to pan';
     case 'underlay': return 'drag the chosen underlay';
@@ -1321,21 +1362,21 @@ function updateStatus(p) {
   const live = q ? lengthText(startPt, q) : null;
   const ang = q && (snapKind === 'polar' || snapKind === 'par' || snapKind === 'perp')
     ? ((Math.atan2(-(q.y - startPt.y), q.x - startPt.x) * 180 / Math.PI + 360) % 360).toFixed(1) + '°' : null;
-  let t = TOOL_NAMES[tool] + ': ' + hint();
+  let t = tr(TOOL_NAMES[tool]) + ': ' + hint();
   if (lastP) t += `  |  ${lastP.x.toFixed(1)}, ${lastP.y.toFixed(1)}`;
-  if (live) t += '  |  length ' + live + (ang ? ' at ' + ang : '');
-  if (typed) t += '  |  typed length ' + typed + ' m, Enter to place';
-  t += `  |  ${sel.size} selected`;
+  if (live) t += '  |  ' + (ang ? tr('length {0} at {1}', live, ang) : tr('length {0}', live));
+  if (typed) t += '  |  ' + tr('typed length {0} m, Enter to place', typed);
+  t += '  |  ' + tr('{0} selected', sel.size);
   $('status').textContent = t;
 
-  const box = $('info'), rows = [TOOL_NAMES[tool], hint()];
+  const box = $('info'), rows = [tr(TOOL_NAMES[tool]), hint()];
   if (lastP) rows.push(`x ${lastP.x.toFixed(1)}, y ${lastP.y.toFixed(1)}`);
-  rows.push(sel.size + ' selected');
+  rows.push(tr('{0} selected', sel.size));
   const L = selectionLength();
-  if (L) rows.push((L.n > 1 ? 'total length ' : 'length ') + fmtLen(L.total));
-  if (live) rows.push('drawing length ' + live);
-  if (ang) rows.push('angle ' + ang);
-  if (typed) rows.push('typed length ' + typed + ' m');
+  if (L) rows.push(L.n > 1 ? tr('total length {0}', fmtLen(L.total)) : tr('length {0}', fmtLen(L.total)));
+  if (live) rows.push(tr('drawing length {0}', live));
+  if (ang) rows.push(tr('angle {0}', ang));
+  if (typed) rows.push(tr('typed length {0} m', typed));
   box.textContent = '';
   rows.forEach(r => { const d = document.createElement('div'); d.textContent = r; box.appendChild(d); });
 }
@@ -1402,7 +1443,7 @@ function doClick(raw) {
     endDraw();
   } else if (tool === 'text') {
     const s = $('textValue').value;
-    if (!s) { msg('Enter the text in the Text field first.'); return; }
+    if (!s) { msg(tr('Enter the text in the Text field first.')); return; }
     const p = snapPoint(raw), t = mkText(p.x, p.y, s, num('fontSize'));
     const h = $('attachNew').checked ? hitTest(raw) : null;
     if (h && h.tagName !== 'text') attachTo(t, h);
@@ -1425,7 +1466,7 @@ function doClick(raw) {
   } else if (tool === 'measure') {
     const p = drawPoint(raw);
     if (!startPt) { startPt = p; setPreview(p, p); return; }
-    msg('Distance: ' + lengthText(startPt, p));
+    msg(tr('Distance: {0}', lengthText(startPt, p)));
     setPreview(startPt, p);
     startPt = null;
   } else if (tool === 'dimension') {
@@ -1436,13 +1477,13 @@ function doClick(raw) {
       dimB = p; updatePreview(raw); return;
     }
     const d = dimGeom(startPt, dimB, p);
-    if (!d) { msg('Click to one side of the measured line.'); return; }
+    if (!d) { msg(tr('Click to one side of the measured line.')); return; }
     addEls(dimensionEls(startPt, dimB, d));
     endDraw();
   } else if (tool === 'horizontal') {
     const u = curU();
-    if (!u || !u.el) { msg('Pick an underlay image first.'); return; }
-    if (u.locked) { msg('The underlay is locked.'); return; }
+    if (!u || !u.el) { msg(tr('Pick an underlay image first.')); return; }
+    if (u.locked) { msg(tr('The underlay is locked.')); return; }
     if (!startPt) { startPt = { x: raw.x, y: raw.y }; setPreview(startPt, startPt); return; }
     makeHorizontal(u, startPt, raw);
     endDraw();
@@ -1451,15 +1492,15 @@ function doClick(raw) {
   else if (tool === 'extend') doExtend(raw);
   else if (tool === 'calibrate') {
     const u = curU();
-    if (!u || !u.el) { msg('Pick an underlay image first.'); return; }
-    if (!(num('calDist') > 0)) { msg('Enter the real distance in meters first.'); return; }
+    if (!u || !u.el) { msg(tr('Pick an underlay image first.')); return; }
+    if (!(num('calDist') > 0)) { msg(tr('Enter the real distance in meters first.')); return; }
     const p = drawPoint(raw);
     if (!startPt) { startPt = p; setPreview(p, p); return; }
     const d = Math.hypot(p.x - startPt.x, p.y - startPt.y);
     if (d > 0) {
       u.scale *= num('calDist') * num('upm') / d;
       renderU(u); syncControls(); changed();
-      msg('Underlay scale set to ' + u.scale.toFixed(5));
+      msg(tr('Underlay scale set to {0}', u.scale.toFixed(5)));
     }
     endDraw();
   }
@@ -1623,7 +1664,7 @@ view.addEventListener('pointerdown', ev => {
     if (u && u.el && !u.locked) {
       const lc = localCenter(u), C = uWorld(u, lc.x, lc.y);
       drag = { kind: 'rotate', u, C, a0: Math.atan2(p.y - C.y, p.x - C.x), rot0: u.rot, x0: u.x, y0: u.y };
-    } else msg(u && u.locked ? 'The underlay is locked.' : 'Pick an underlay image first.');
+    } else msg(u && u.locked ? tr('The underlay is locked.') : tr('Pick an underlay image first.'));
   } else if (tool === 'zoomwin') drag = { kind: 'zoomwin', start: p };
   else if (tool === 'select') selectDown(ev, p);
 });
@@ -1703,9 +1744,9 @@ window.addEventListener('keyup', ev => { if (ev.key === 'Shift') shiftDown = fal
 
 function typedChanged() { if (lastP) updatePreview(lastP); updateStatus(); }
 function placeTyped() {
-  if (!(parseFloat(typed) * num('upm') > 0)) { msg('Set units per meter and type a length above zero.'); typed = ''; updateStatus(); return; }
+  if (!(parseFloat(typed) * num('upm') > 0)) { msg(tr('Set units per meter and type a length above zero.')); typed = ''; updateStatus(); return; }
   const q = lastP ? drawPoint(lastP) : null;
-  if (!q || (q.x === startPt.x && q.y === startPt.y)) { msg('Move the cursor in the direction of the line first.'); return; }
+  if (!q || (q.x === startPt.x && q.y === startPt.y)) { msg(tr('Move the cursor in the direction of the line first.')); return; }
   const e = typedEnd(q);
   addEls([mkLine(startPt.x, startPt.y, e.x, e.y)]);
   typed = '';
@@ -1726,7 +1767,7 @@ $('joinCol').addEventListener('click', joinCollinear);
 document.querySelectorAll('[data-arrange]').forEach(b => b.addEventListener('click', () => arrange(b.dataset.arrange)));
 function syncOrtho() {
   const on = $('ortho').checked;
-  $('orthoBtn').textContent = 'Ortho: ' + (on ? 'on' : 'off');
+  $('orthoBtn').textContent = tr('Ortho: {0}', on ? tr('on') : tr('off'));
   $('orthoBtn').classList.toggle('on', on);
   layoutOverlays();
 }
@@ -1789,11 +1830,17 @@ $('cropClear').addEventListener('click', () => { const u = curU(); if (u) { u.cr
 ['showGrid', 'gridSize'].forEach(id => $(id).addEventListener('input', updateGrid));
 
 // Symbols
-for (const k in SYMBOLS) {
-  const o = document.createElement('option');
-  o.value = k; o.textContent = SYMBOLS[k].name;
-  $('symType').appendChild(o);
+function fillSymTypes() {
+  const sel = $('symType'), cur = sel.value;
+  sel.textContent = '';
+  for (const k in SYMBOLS) {
+    const o = document.createElement('option');
+    o.value = k; o.textContent = tr(SYMBOLS[k].name);
+    sel.appendChild(o);
+  }
+  if (cur) sel.value = cur;
 }
+fillSymTypes();
 function symDefaults() {
   const d = SYMBOLS[$('symType').value];
   $('symW').value = d.w; $('symD').value = d.d; $('symD').disabled = !!d.square;
@@ -1809,7 +1856,7 @@ function changeSymbols(fn) {
     buildSymbol(e);
     items.push({ el: e, before, after: snapshot(e) });
   }
-  if (!items.length) { msg('Select a symbol first.'); return; }
+  if (!items.length) { msg(tr('Select a symbol first.')); return; }
   push({ type: 'attrs', items });
 }
 $('symApply').addEventListener('click', () => changeSymbols(e => {
@@ -1821,7 +1868,7 @@ $('symRotate').addEventListener('click', () => changeSymbols(e => e.setAttribute
 // Text attached to elements, and element ids
 $('attachText').addEventListener('click', () => {
   const ts = [...sel].filter(e => e.tagName === 'text'), os = [...sel].filter(e => e.tagName !== 'text');
-  if (ts.length !== 1 || os.length !== 1) { msg('Select one text and one element to attach it to.'); return; }
+  if (ts.length !== 1 || os.length !== 1) { msg(tr('Select one text and one element to attach it to.')); return; }
   const t = ts[0], before = snapshot(t);
   attachTo(t, os[0]); relayoutTexts();
   push({ type: 'attrs', items: [{ el: t, before, after: snapshot(t) }] });
@@ -1834,15 +1881,15 @@ $('detachText').addEventListener('click', () => {
     ['data-for', 'data-dx', 'data-dy'].forEach(k => t.removeAttribute(k));
     items.push({ el: t, before, after: snapshot(t) });
   }
-  if (!items.length) { msg('Select an attached text first.'); return; }
+  if (!items.length) { msg(tr('Select an attached text first.')); return; }
   push({ type: 'attrs', items });
 });
 $('applyId').addEventListener('click', () => {
-  if (sel.size !== 1) { msg('Select one element first.'); return; }
+  if (sel.size !== 1) { msg(tr('Select one element first.')); return; }
   const e = [...sel][0], id = $('elId').value.trim();
-  if (!/^[A-Za-z][A-Za-z0-9_]*$/.test(id)) { msg('An ID starts with a letter and has only letters, digits and underscores.'); return; }
+  if (!/^[A-Za-z][A-Za-z0-9_]*$/.test(id)) { msg(tr('An ID starts with a letter and has only letters, digits and underscores.')); return; }
   if (id === e.id) return;
-  if (byId(id)) { msg('That ID is already used.'); return; }
+  if (byId(id)) { msg(tr('That ID is already used.')); return; }
   const items = [{ el: e, before: { id: e.id }, after: { id } }];
   for (const t of gTrace.querySelectorAll('text[data-for]')) if (t.getAttribute('data-for') === e.id) items.push({ el: t, before: { 'data-for': e.id }, after: { 'data-for': id } });
   const op = { type: 'attrs', items };
@@ -1855,7 +1902,7 @@ function syncLayers() {
   s.textContent = '';
   for (const l of layers) {
     const o = document.createElement('option');
-    o.value = l.name; o.textContent = l.name + (l.visible ? '' : ' (hidden)') + (l.locked ? ' (locked)' : '');
+    o.value = l.name; o.textContent = l.name + (l.visible ? '' : ' ' + tr('(hidden)')) + (l.locked ? ' ' + tr('(locked)') : '');
     s.appendChild(o);
   }
   if (!layerByName(activeLayer)) activeLayer = layers[0].name;
@@ -1867,25 +1914,25 @@ function syncLayers() {
 $('layerSel').addEventListener('change', e => { activeLayer = e.target.value; syncLayers(); paint(); });
 $('layerAdd').addEventListener('click', () => {
   const name = $('layerName').value.trim() || 'Layer ' + (layers.length + 1);
-  if (layerByName(name)) { msg('A layer with that name exists.'); return; }
+  if (layerByName(name)) { msg(tr('A layer with that name exists.')); return; }
   layers.push({ name, visible: true, locked: false }); activeLayer = name;
   syncLayers(); paint(); changed();
 });
 $('layerRename').addEventListener('click', () => {
   const name = $('layerName').value.trim(), L = layerByName(activeLayer);
   if (!name || name === L.name) return;
-  if (layerByName(name)) { msg('A layer with that name exists.'); return; }
+  if (layerByName(name)) { msg(tr('A layer with that name exists.')); return; }
   for (const e of gTrace.children) if (e.getAttribute('data-layer') === L.name) e.setAttribute('data-layer', name);
   L.name = name; activeLayer = name;
   syncLayers(); paint(); changed();
 });
 $('layerDel').addEventListener('click', () => {
-  if (layers.length < 2) { msg('The last layer cannot be deleted.'); return; }
+  if (layers.length < 2) { msg(tr('The last layer cannot be deleted.')); return; }
   const L = layerByName(activeLayer), rest = layers.filter(l => l !== L);
   for (const e of gTrace.children) if (e.getAttribute('data-layer') === L.name) e.setAttribute('data-layer', rest[0].name);
   layers = rest; activeLayer = rest[0].name;
   syncLayers(); paint(); changed();
-  msg('Layer deleted; its elements moved to ' + rest[0].name + '.');
+  msg(tr('Layer deleted; its elements moved to {0}.', rest[0].name));
 });
 ['layerVis', 'layerLock'].forEach(id => $(id).addEventListener('change', () => {
   const L = layerByName(activeLayer);
@@ -1895,7 +1942,7 @@ $('layerDel').addEventListener('click', () => {
 $('toLayer').addEventListener('click', () => {
   const items = [...sel].filter(e => e.getAttribute('data-layer') !== activeLayer)
     .map(e => ({ el: e, before: { 'data-layer': e.getAttribute('data-layer') }, after: { 'data-layer': activeLayer } }));
-  if (!items.length) { msg('Select elements that are on another layer first.'); return; }
+  if (!items.length) { msg(tr('Select elements that are on another layer first.')); return; }
   const op = { type: 'attrs', items };
   runOp(op, 'redo'); push(op);
 });
@@ -1920,7 +1967,7 @@ $('underDown').addEventListener('click', () => moveUnder(-1));
 function nudge(dx, dy) {
   const u = curU();
   if (!u) return;
-  if (u.locked) { msg('The underlay is locked.'); return; }
+  if (u.locked) { msg(tr('The underlay is locked.')); return; }
   const s = num('nudgeStep') || 1;
   u.x = r3(u.x + dx * s); u.y = r3(u.y + dy * s);
   renderU(u); syncControls(); changed();
@@ -2058,7 +2105,7 @@ mm.addEventListener('pointermove', ev => { if (mapDrag) mapMove(ev); });
 mm.addEventListener('pointerup', () => { mapDrag = false; });
 mm.addEventListener('pointercancel', () => { mapDrag = false; });
 function syncMap() {
-  $('mapBtn').textContent = 'Map: ' + (ui.map ? 'on' : 'off');
+  $('mapBtn').textContent = tr('Map: {0}', ui.map ? tr('on') : tr('off'));
   $('mapBtn').classList.toggle('on', !!ui.map);
   layoutOverlays(); drawMinimap();
 }
@@ -2159,30 +2206,30 @@ async function saveFile(name, data, mime, ext) {
     }
     return true;
   } catch (e) {
-    if (e.name !== 'AbortError' && e.code !== 'declined') msg('Error: ' + e.message);
+    if (e.name !== 'AbortError' && e.code !== 'declined') msg(tr('Error: {0}', e.message));
     return false;
   }
 }
 
 function validate() {
   const problems = [];
-  if (!(num('fw') > 0) || !(num('fh') > 0)) problems.push('the frame width and height must be above zero');
-  if (!$('floorId').value.trim()) problems.push('the floor ID is empty');
-  if (!(num('upm') > 0)) problems.push('units per meter must be above zero');
+  if (!(num('fw') > 0) || !(num('fh') > 0)) problems.push(tr('the frame width and height must be above zero'));
+  if (!$('floorId').value.trim()) problems.push(tr('the floor ID is empty'));
+  if (!(num('upm') > 0)) problems.push(tr('units per meter must be above zero'));
   return problems;
 }
 
 $('save').addEventListener('click', async () => {
   const problems = validate();
-  if (problems.length) { msg('Cannot save: ' + problems.join('; ') + '.'); return; }
+  if (problems.length) { msg(tr('Cannot save: {0}.', problems.join('; '))); return; }
   const name = $('floorId').value.trim() + '-plan.svg';
-  if (await saveFile(name, buildSvg(), 'image/svg+xml', 'svg')) { dirty = false; msg('Saved.'); }
+  if (await saveFile(name, buildSvg(), 'image/svg+xml', 'svg')) { dirty = false; msg(tr('Saved.')); }
 });
 
 // PNG preview of the frame area: visible underlays and traced elements, without grid or guides
 $('exportPng').addEventListener('click', async () => {
   const f = frame();
-  if (!(f.w > 0 && f.h > 0)) { msg('Cannot export: the frame width and height must be above zero.'); return; }
+  if (!(f.w > 0 && f.h > 0)) { msg(tr('Cannot export: the frame width and height must be above zero.')); return; }
   const cw = Math.round(f.w >= f.h ? 2000 : 2000 * f.w / f.h), ch = Math.round(cw * f.h / f.w), s = cw / f.w;
   const cv = document.createElement('canvas');
   cv.width = cw; cv.height = ch;
@@ -2243,8 +2290,8 @@ $('exportPng').addEventListener('click', async () => {
     }
   }
   const blob = await new Promise(r => cv.toBlob(r, 'image/png'));
-  if (!blob) { msg('Could not create the PNG.'); return; }
-  if (await saveFile(($('floorId').value.trim() || 'plan') + '-preview.png', blob, 'image/png', 'png')) msg('PNG saved.');
+  if (!blob) { msg(tr('Could not create the PNG.')); return; }
+  if (await saveFile(($('floorId').value.trim() || 'plan') + '-preview.png', blob, 'image/png', 'png')) msg(tr('PNG saved.'));
 });
 
 // Loading: traced elements from SVG markup (a list of element nodes)
@@ -2323,7 +2370,7 @@ $('openFile').addEventListener('change', async e => {
   if (!file) return;
   const doc = new DOMParser().parseFromString(await file.text(), 'image/svg+xml');
   const root = doc.documentElement;
-  if (root.tagName !== 'svg') { msg('Not an SVG file.'); return; }
+  if (root.tagName !== 'svg') { msg(tr('Not an SVG file.')); return; }
   const v = (root.getAttribute('viewBox') || '0 0 1000 700').split(/[\s,]+/).map(Number);
   ['fx', 'fy', 'fw', 'fh'].forEach((id, i) => { $(id).value = v[i]; });
   $('floorId').value = root.getAttribute('data-floor-id') || '';
@@ -2335,24 +2382,24 @@ $('openFile').addEventListener('change', async e => {
   activeU = unders.length ? 0 : -1;
   rebuildUnderDom(); syncControls();
   applyFrame(); fitCamera(); changed(); dirty = false;
-  msg(unders.length ? 'Opened. Pick the underlay images again: ' + unders.map(u => u.name).join(', ') : 'Opened.');
+  msg(unders.length ? tr('Opened. Pick the underlay images again: {0}', unders.map(u => u.name).join(', ')) : tr('Opened.'));
 });
 
 // New document: needs a second click within three seconds
 let newArmed = null;
 $('newDoc').addEventListener('click', () => {
   if (!newArmed) {
-    $('newDoc').textContent = 'Really clear?';
-    newArmed = setTimeout(() => { newArmed = null; $('newDoc').textContent = 'New'; }, 3000);
+    $('newDoc').textContent = tr('Really clear?');
+    newArmed = setTimeout(() => { newArmed = null; $('newDoc').textContent = tr('New'); }, 3000);
     return;
   }
-  clearTimeout(newArmed); newArmed = null; $('newDoc').textContent = 'New';
+  clearTimeout(newArmed); newArmed = null; $('newDoc').textContent = tr('New');
   gTrace.textContent = ''; sel.clear(); undoS = []; redoS = [];
   layers = [{ name: 'Default', visible: true, locked: false }]; activeLayer = 'Default'; syncLayers();
   unders.forEach(u => { if (u.url) URL.revokeObjectURL(u.url); });
   unders = []; activeU = -1; rebuildUnderDom(); syncControls(); endDraw(); hideAids(); paint();
   clearTimeout(saveTimer); autosave(); dirty = false;
-  msg('Cleared.');
+  msg(tr('Cleared.'));
 });
 
 // Autosave in the browser's storage; underlay images are not stored, only their placement
@@ -2381,7 +2428,7 @@ function restore() {
     unders = [...doc.querySelectorAll('#underlays image')].map(underFromImage);
     activeU = unders.length ? 0 : -1;
     if (gTrace.children.length || unders.length) {
-      msg('Restored the autosave from ' + data.saved.slice(0, 16).replace('T', ' ') + (unders.length ? '. Pick the underlay images again.' : '.'));
+      msg(tr('Restored the autosave from {0}.', data.saved.slice(0, 16).replace('T', ' ')) + (unders.length ? ' ' + tr('Pick the underlay images again.') : ''));
     }
   } catch (e) { /* ignore a broken autosave */ }
 }
@@ -2397,7 +2444,7 @@ function applyTheme() {
   const t = ui.theme || 'system';
   if (t === 'system') delete document.documentElement.dataset.theme;
   else document.documentElement.dataset.theme = t;
-  $('themeBtn').textContent = 'Theme: ' + t;
+  $('themeBtn').textContent = tr('Theme: {0}', tr(t));
 }
 $('themeBtn').addEventListener('click', () => {
   const order = ['system', 'light', 'dark'];
@@ -2430,7 +2477,10 @@ if (gTrace.children.length || unders.length) dirty = true;
 rebuildUnderDom(); syncControls(); syncLayers();
 applyFrame();
 if (Array.isArray(ui.view) && ui.view.length === 4 && ui.view.every(Number.isFinite)) setView(...ui.view); else fitCamera();
-setTool('line'); applyTheme(); syncOrtho(); syncMap();
+setTool('line');
+lang = ui.lang || (/^de/i.test(navigator.language || '') ? 'de' : 'en');
+$('langBtn').addEventListener('click', () => setLang(lang === 'de' ? 'en' : 'de'));
+applyLang();
 </script>
 </body>
 </html>
